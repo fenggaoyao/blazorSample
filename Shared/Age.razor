@@ -1,0 +1,59 @@
+@inject IModel Model
+
+
+<div class="unit">
+    <div class="label">年龄(@Globals.MinAge-@Globals.MaxAge):</div>
+    <div class="labelTarget">
+        <input type="number"
+                class="@inputClass" bind="@AgeAmt"/>年龄
+    </div>
+</div>
+
+@functions{
+    protected override void OnAfterRender()
+    {
+        Model.Register(()=>{
+            base.StateHasChanged();
+        });
+        base.OnAfterRender();
+    }
+    protected override void OnInit()
+    {
+        base.OnInit();
+        _age=Model.AgeYears;
+    }
+    int _age;
+    bool ErrorStat=false;
+    string inputClass
+    {
+        get
+        {
+            return ErrorStat ? "error" : string.Empty;
+        }
+    }
+
+    int AgeAmt
+    {
+        get
+        {
+            return _age;
+        }
+        set
+        {
+            if(value != _age)
+            {
+                _age=value;
+                if(value<Globals.MinAge || value >Globals.MaxAge)
+                    {
+                        ErrorStat=true;
+                    }
+                    else
+                    {
+                        ErrorStat=false;
+                        Model.AgeYears=value;
+                    }
+            }
+        }
+    }
+
+}

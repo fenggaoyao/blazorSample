@@ -1,0 +1,20 @@
+@inject IModel  Model
+
+<div class="unit">
+    <div class="label">
+        <label for="btnGenderToggle">性别:</label>
+    </div>
+    <div class="labelTarget">
+        <button id="btnGenderToggle" onclick="@Model.ToggleGender">@ToggleText</button>
+    </div>
+</div>
+
+@functions {       
+    string ToggleText
+    {
+        get
+        {
+            return Model.IsMale ? "男" : "女";
+        }
+    }
+}

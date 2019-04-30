@@ -1,0 +1,72 @@
+@inject IModel Model
+
+<div title="Body Mass Index"
+     class="@BmiClass">
+    <h1>BMI指数:</h1>
+    <h2>@Model.Bmi</h2>
+    <h2>@BmiText</h2>
+</div>
+
+@functions {
+
+    protected override void OnAfterRender()
+    {
+        Model.Register(() => base.StateHasChanged());
+        base.OnAfterRender();
+    }
+
+    string BmiClass
+    {
+        get
+        {
+            return $"{BmiTag} tile";
+        }
+    }
+
+   string BmiTag
+    {
+        get
+        {
+            if (Model.Bmi >= 30.0)
+            {
+                return "Obese";
+            }
+
+            if (Model.Bmi >= 25.0)
+            {
+                return "Overweight";
+            }
+
+            if (Model.Bmi < 18.5)
+            {
+                return "Underweight";
+            }
+
+            return "Normal";
+        }
+    }
+
+
+    string BmiText
+    {
+        get
+        {
+            if (Model.Bmi >= 30.0)
+            {
+                return "肥胖";
+            }
+
+            if (Model.Bmi >= 25.0)
+            {
+                return "超重";
+            }
+
+            if (Model.Bmi < 18.5)
+            {
+                return "偏瘦";
+            }
+
+            return "正常";
+        }
+    }
+}
